@@ -96,15 +96,15 @@ tarefas, e todas as tarefas de um projeto serão excluídas no momento de sua ex
 O sistema não deve implementar cadstro, login, ou restrições com base em quem está o usando
 no momento.
 
-### Tecnologias utilizadas
+## Tecnologias utilizadas
 
-#### Java
+### Java
 
 A linguagem Java foi escolhida para o desenvolvimento dessa apliacação por ser uma linguagem
 versátil e bastante utilizada no mercaso, além de ser a linguagem foco do curso seguido para
 o desenvolvimento desse código.
 
-#### MySQL
+### MySQL
 
 O MySQL foi escolhido também por ser bastante utilizada no mercado e por ter sido abordada durante
 o curso seguido para o sesenvolvimento dessa aplicação.
