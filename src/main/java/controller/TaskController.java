@@ -3,7 +3,6 @@ package controller;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 import model.Task;
 import util.ConnectionFactory;
@@ -45,7 +44,7 @@ public class TaskController {
         } catch (Exception e) {
             throw new RuntimeException("Erro ao salvar a tarefa " + e.getMessage(), e);
         } finally {
-            ConnectionFactory.closeConnection(connection);
+            ConnectionFactory.closeConnection(connection, statement);
         }
     }
     
@@ -53,22 +52,22 @@ public class TaskController {
         
     }
     
-    public void removeById(int taskId) throws SQLException {
+    public void removeById(int taskId) {
         String sql = "DELETE FROM tasks WHERE id = ?";
         
-        Connection conn = null;
+        Connection connection = null;
         PreparedStatement statement = null;
         
         try {
-            conn = ConnectionFactory.getConnection();
+            connection = ConnectionFactory.getConnection();
             
-            statement = conn.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, taskId); // substitui ? da string sql pelo id
             statement.execute();
-        } catch (SQLException e) {
-            throw new SQLException("Erro ao executar a tarefa");
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao executar a tarefa" + e.getMessage(), e);
         } finally {
-            ConnectionFactory.closeConnection(conn);
+            ConnectionFactory.closeConnection(connection, statement);
         }
         
     }
