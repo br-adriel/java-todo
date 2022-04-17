@@ -3,6 +3,8 @@ package controller;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import model.Task;
 import util.ConnectionFactory;
@@ -24,13 +26,13 @@ public class TaskController {
                 + "cratedAt,"
                 + "updatedAt"
                 + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        
+
         Connection connection = null;
         PreparedStatement statement = null;
-        
+
         try {
             connection = ConnectionFactory.getConnection();
-            
+
             statement = connection.prepareStatement(sql);
             statement.setInt(1, task.getIdProject());
             statement.setString(2, task.getName());
@@ -47,7 +49,7 @@ public class TaskController {
             ConnectionFactory.closeConnection(connection, statement);
         }
     }
-    
+
     public void update(Task task) {
         String sql = "UPDATE tasks SET "
                 + "idProject = ?, "
@@ -59,13 +61,13 @@ public class TaskController {
                 + "createdAt = ?, "
                 + "updatedAt = ? "
                 + "WHERE id = ?";
-        
+
         Connection connection = null;
         PreparedStatement statement = null;
-        
+
         try {
             connection = ConnectionFactory.getConnection();
-            
+
             statement = connection.prepareStatement(sql);
             statement.setInt(1, task.getIdProject());
             statement.setString(2, task.getName());
@@ -83,18 +85,18 @@ public class TaskController {
         } finally {
             ConnectionFactory.closeConnection(connection, statement);
         }
-        
+
     }
-    
+
     public void removeById(int taskId) {
         String sql = "DELETE FROM tasks WHERE id = ?";
-        
+
         Connection connection = null;
         PreparedStatement statement = null;
-        
+
         try {
             connection = ConnectionFactory.getConnection();
-            
+
             statement = connection.prepareStatement(sql);
             statement.setInt(1, taskId); // substitui ? da string sql pelo id
             statement.execute();
@@ -103,10 +105,46 @@ public class TaskController {
         } finally {
             ConnectionFactory.closeConnection(connection, statement);
         }
-        
+
     }
-    
+
     public List<Task> getAll(int idProject) {
-        return null;
+        String sql = "SELECT * FROM tasks WHERE idProject = ?";
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null; // armazena dados vindos do banco de dados
+        List<Task> tasks = new ArrayList<Task>(); // lista de tarefas a ser retornada
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, idProject);
+
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Task task = new Task();
+                task.setId(resultSet.getInt("id"));
+                task.setIdProject(resultSet.getInt("idProject"));
+                task.setName(resultSet.getString("name"));
+                task.setDescription(resultSet.getString("description"));
+                task.setDescription(resultSet.getString("description"));
+                task.setNotes(resultSet.getString("notes"));
+                task.setIsCompleted(resultSet.getBoolean("completed"));
+                task.setDeadline(resultSet.getDate("deadline"));
+                task.setCreatedAt(resultSet.getDate("createdAt"));
+                task.setUpdatedAt(resultSet.getDate("updatedAt"));
+
+                tasks.add(task);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao recuperar dados " + e.getMessage(), e);
+        } finally {
+            ConnectionFactory.closeConnection(connection, statement, resultSet);
+        }
+
+        return tasks;
     }
 }
