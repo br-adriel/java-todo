@@ -23,7 +23,7 @@ public class TaskController {
                 + "completed,"
                 + "notes,"
                 + "deadline,"
-                + "cratedAt,"
+                + "createdAt,"
                 + "updatedAt"
                 + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
