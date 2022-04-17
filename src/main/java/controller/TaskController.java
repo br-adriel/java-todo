@@ -130,7 +130,6 @@ public class TaskController {
                 task.setIdProject(resultSet.getInt("idProject"));
                 task.setName(resultSet.getString("name"));
                 task.setDescription(resultSet.getString("description"));
-                task.setDescription(resultSet.getString("description"));
                 task.setNotes(resultSet.getString("notes"));
                 task.setIsCompleted(resultSet.getBoolean("completed"));
                 task.setDeadline(resultSet.getDate("deadline"));
