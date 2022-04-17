@@ -70,6 +70,22 @@ public class ProjectController {
     }
 
     public void removeById(int projectId) {
+        String sql = "DELETE FROM projects WHERE id = ?";
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, projectId); // substitui ? da string sql pelo id
+            statement.execute();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao excluir o projeto" + e.getMessage(), e);
+        } finally {
+            ConnectionFactory.closeConnection(connection, statement);
+        }
     }
 
     public List<Project> getAll() {
