@@ -19,7 +19,7 @@ public class ProjectController {
         String sql = "INSERT INTO projects ("
                 + "name,"
                 + "description,"
-                + "cratedAt,"
+                + "createdAt,"
                 + "updatedAt"
                 + ") VALUES (?, ?, ?, ?)";
 
