@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Font;
 
 /**
  *
@@ -13,6 +14,7 @@ public class MainScreen extends javax.swing.JFrame {
      */
     public MainScreen() {
         initComponents();
+        decorateTableTask();
     }
 
     /**
@@ -24,6 +26,10 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        frameNenhumaTarefa = new javax.swing.JPanel();
+        iconeSemTarefas = new javax.swing.JLabel();
+        labelNenhumaTarefa = new javax.swing.JLabel();
+        labelCliqueMais = new javax.swing.JLabel();
         frameFundo = new javax.swing.JPanel();
         frameHeader = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
@@ -37,10 +43,41 @@ public class MainScreen extends javax.swing.JFrame {
         frameHeaderTarefas = new javax.swing.JPanel();
         labelTarefas = new javax.swing.JLabel();
         btnNovaTarefa = new javax.swing.JButton();
-        frameNenhumaTarefa = new javax.swing.JPanel();
-        iconeSemTarefas = new javax.swing.JLabel();
-        labelNenhumaTarefa = new javax.swing.JLabel();
-        labelCliqueMais = new javax.swing.JLabel();
+        scrollTarefas = new javax.swing.JScrollPane();
+        tabelaTarefas = new javax.swing.JTable();
+
+        frameNenhumaTarefa.setBackground(new java.awt.Color(255, 255, 255));
+
+        iconeSemTarefas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconeSemTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check-square.png"))); // NOI18N
+
+        labelNenhumaTarefa.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        labelNenhumaTarefa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelNenhumaTarefa.setText("Nenhuma tarefa por aqui...");
+
+        labelCliqueMais.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        labelCliqueMais.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelCliqueMais.setText("Clique em + para adicionar uma tarefa");
+
+        javax.swing.GroupLayout frameNenhumaTarefaLayout = new javax.swing.GroupLayout(frameNenhumaTarefa);
+        frameNenhumaTarefa.setLayout(frameNenhumaTarefaLayout);
+        frameNenhumaTarefaLayout.setHorizontalGroup(
+            frameNenhumaTarefaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(iconeSemTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelNenhumaTarefa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+            .addComponent(labelCliqueMais, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        frameNenhumaTarefaLayout.setVerticalGroup(
+            frameNenhumaTarefaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frameNenhumaTarefaLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(iconeSemTarefas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelNenhumaTarefa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCliqueMais)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TO DO");
@@ -149,7 +186,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(frameProjetosLayout.createSequentialGroup()
                 .addComponent(frameHeaderProjetos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollProjetos, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                .addComponent(scrollProjetos)
                 .addContainerGap())
         );
 
@@ -206,38 +243,41 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        frameNenhumaTarefa.setBackground(new java.awt.Color(255, 255, 255));
+        scrollTarefas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
 
-        iconeSemTarefas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        iconeSemTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check-square.png"))); // NOI18N
+        tabelaTarefas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        tabelaTarefas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Descricao", "Prazo", "Concluida"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true
+            };
 
-        labelNenhumaTarefa.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
-        labelNenhumaTarefa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelNenhumaTarefa.setText("Nenhuma tarefa por aqui...");
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        labelCliqueMais.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        labelCliqueMais.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelCliqueMais.setText("Clique em + para adicionar uma tarefa");
-
-        javax.swing.GroupLayout frameNenhumaTarefaLayout = new javax.swing.GroupLayout(frameNenhumaTarefa);
-        frameNenhumaTarefa.setLayout(frameNenhumaTarefaLayout);
-        frameNenhumaTarefaLayout.setHorizontalGroup(
-            frameNenhumaTarefaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(iconeSemTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(labelNenhumaTarefa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-            .addComponent(labelCliqueMais, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        frameNenhumaTarefaLayout.setVerticalGroup(
-            frameNenhumaTarefaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(frameNenhumaTarefaLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(iconeSemTarefas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNenhumaTarefa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelCliqueMais)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaTarefas.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaTarefas.setInheritsPopupMenu(true);
+        tabelaTarefas.setRowHeight(40);
+        tabelaTarefas.setSelectionBackground(new java.awt.Color(108, 92, 231));
+        tabelaTarefas.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        scrollTarefas.setViewportView(tabelaTarefas);
 
         javax.swing.GroupLayout frameTarefasLayout = new javax.swing.GroupLayout(frameTarefas);
         frameTarefas.setLayout(frameTarefasLayout);
@@ -246,7 +286,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addComponent(frameHeaderTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(frameTarefasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(frameNenhumaTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(scrollTarefas)
                 .addContainerGap())
         );
         frameTarefasLayout.setVerticalGroup(
@@ -254,7 +294,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(frameTarefasLayout.createSequentialGroup()
                 .addComponent(frameHeaderTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(frameNenhumaTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(scrollTarefas)
                 .addContainerGap())
         );
 
@@ -334,7 +374,7 @@ public class MainScreen extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Java swing".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -376,5 +416,14 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JList<String> listaProjetos;
     private javax.swing.JScrollPane scrollProjetos;
+    private javax.swing.JScrollPane scrollTarefas;
+    private javax.swing.JTable tabelaTarefas;
     // End of variables declaration//GEN-END:variables
+
+    public void decorateTableTask() {
+        tabelaTarefas.getTableHeader().setFont(new Font("Ubuntu", Font.BOLD, 14));
+        tabelaTarefas.getTableHeader().setBackground(new Color(108,92,231));
+        tabelaTarefas.getTableHeader().setForeground(new Color(255, 255, 255));
+        tabelaTarefas.setAutoCreateRowSorter(true);
+    }
 }
