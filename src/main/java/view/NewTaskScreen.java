@@ -4,11 +4,21 @@
  */
 package view;
 
+import controller.TaskController;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import model.Project;
+import model.Task;
+
 /**
  *
  * @author adriel
  */
 public class NewTaskScreen extends javax.swing.JDialog {
+
+    TaskController controller;
+    Project project;
 
     /**
      * Creates new form NewTaskScreen
@@ -16,6 +26,8 @@ public class NewTaskScreen extends javax.swing.JDialog {
     public NewTaskScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        controller = new TaskController();
     }
 
     /**
@@ -40,10 +52,11 @@ public class NewTaskScreen extends javax.swing.JDialog {
         labelPrazo = new javax.swing.JLabel();
         labelNotas = new javax.swing.JLabel();
         scrollNotas = new javax.swing.JScrollPane();
-        inputDescricao1 = new javax.swing.JTextArea();
+        inputNotas = new javax.swing.JTextArea();
         inputPrazo = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nova tarefa");
 
         frameFundo.setBackground(new java.awt.Color(223, 230, 233));
 
@@ -87,6 +100,11 @@ public class NewTaskScreen extends javax.swing.JDialog {
         btnSalvar.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         btnSalvar.setForeground(new java.awt.Color(255, 255, 255));
         btnSalvar.setText("Salvar");
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseClicked(evt);
+            }
+        });
 
         inputNome.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         inputNome.addActionListener(new java.awt.event.ActionListener() {
@@ -101,10 +119,10 @@ public class NewTaskScreen extends javax.swing.JDialog {
         labelNotas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         labelNotas.setText("Notas:");
 
-        inputDescricao1.setColumns(20);
-        inputDescricao1.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        inputDescricao1.setRows(5);
-        scrollNotas.setViewportView(inputDescricao1);
+        inputNotas.setColumns(20);
+        inputNotas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        inputNotas.setRows(5);
+        scrollNotas.setViewportView(inputNotas);
 
         inputPrazo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         inputPrazo.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
@@ -209,6 +227,44 @@ public class NewTaskScreen extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_inputPrazoActionPerformed
 
+    private void btnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseClicked
+        String nome = inputNome.getText();
+        String descricao = inputDescricao.getText();
+        String prazo = inputPrazo.getText();
+        String notas = inputNotas.getText();
+
+        if (nome.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "O campo 'nome' está vazio");
+        } else if (prazo.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "O campo 'prazo' está vazio");
+        } else if (!inputPrazo.isValid()) {
+            JOptionPane.showMessageDialog(rootPane, "Insira uma data válida no campo 'prazo'");
+        } else {
+            try {
+                Task task = new Task();
+                
+                task.setIdProject(8);
+                task.setName(nome);
+                task.setDescription(descricao);
+                task.setNotes(notas);
+                task.setIsCompleted(false);
+                task.setCreatedAt(new Date());
+                task.setUpdatedAt(new Date());
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date deadline = dateFormat.parse(prazo);
+
+                task.setDeadline(deadline);
+
+                controller.save(task);
+                JOptionPane.showMessageDialog(rootPane, "Tarefa salva");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Um erro ocorreu");
+            }
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnSalvarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -220,7 +276,7 @@ public class NewTaskScreen extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Java swing".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -257,8 +313,8 @@ public class NewTaskScreen extends javax.swing.JDialog {
     private javax.swing.JPanel frameFundo;
     private javax.swing.JPanel frameHeader;
     private javax.swing.JTextArea inputDescricao;
-    private javax.swing.JTextArea inputDescricao1;
     private javax.swing.JTextField inputNome;
+    private javax.swing.JTextArea inputNotas;
     private javax.swing.JFormattedTextField inputPrazo;
     private javax.swing.JLabel labelDescricao;
     private javax.swing.JLabel labelHeader;
@@ -268,4 +324,9 @@ public class NewTaskScreen extends javax.swing.JDialog {
     private javax.swing.JScrollPane scrollDescricao;
     private javax.swing.JScrollPane scrollNotas;
     // End of variables declaration//GEN-END:variables
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
 }

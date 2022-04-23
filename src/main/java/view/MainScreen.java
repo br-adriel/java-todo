@@ -212,6 +212,9 @@ public class MainScreen extends javax.swing.JFrame {
         btnNovaTarefa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNovaTarefa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnNovaTarefa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNovaTarefaMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnNovaTarefaMouseExited(evt);
             }
@@ -370,6 +373,12 @@ public class MainScreen extends javax.swing.JFrame {
         NewProjectScreen newProjectScreen = new NewProjectScreen(this, rootPaneCheckingEnabled);
         newProjectScreen.setVisible(true);
     }//GEN-LAST:event_btnNovoProjetoMouseClicked
+
+    private void btnNovaTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaTarefaMouseClicked
+        NewTaskScreen newTaskScreen = new NewTaskScreen(this, rootPaneCheckingEnabled);
+        //newTaskScreen.setProject(null);
+        newTaskScreen.setVisible(true);
+    }//GEN-LAST:event_btnNovaTarefaMouseClicked
 
     /**
      * @param args the command line arguments
