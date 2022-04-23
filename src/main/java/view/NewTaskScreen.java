@@ -31,7 +31,6 @@ public class NewTaskScreen extends javax.swing.JDialog {
         frameHeader = new javax.swing.JPanel();
         labelHeader = new javax.swing.JLabel();
         frameForm = new javax.swing.JPanel();
-        inputPrazo = new javax.swing.JTextField();
         labelNome = new javax.swing.JLabel();
         labelDescricao = new javax.swing.JLabel();
         scrollDescricao = new javax.swing.JScrollPane();
@@ -42,6 +41,7 @@ public class NewTaskScreen extends javax.swing.JDialog {
         labelNotas = new javax.swing.JLabel();
         scrollNotas = new javax.swing.JScrollPane();
         inputDescricao1 = new javax.swing.JTextArea();
+        inputPrazo = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -71,13 +71,6 @@ public class NewTaskScreen extends javax.swing.JDialog {
         );
 
         frameForm.setBackground(new java.awt.Color(255, 255, 255));
-
-        inputPrazo.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        inputPrazo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputPrazoActionPerformed(evt);
-            }
-        });
 
         labelNome.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         labelNome.setText("Nome:");
@@ -113,6 +106,14 @@ public class NewTaskScreen extends javax.swing.JDialog {
         inputDescricao1.setRows(5);
         scrollNotas.setViewportView(inputDescricao1);
 
+        inputPrazo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        inputPrazo.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        inputPrazo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputPrazoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout frameFormLayout = new javax.swing.GroupLayout(frameForm);
         frameForm.setLayout(frameFormLayout);
         frameFormLayout.setHorizontalGroup(
@@ -132,14 +133,15 @@ public class NewTaskScreen extends javax.swing.JDialog {
                         .addGroup(frameFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(frameFormLayout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addGroup(frameFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelPrazo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(inputPrazo)))
+                                .addComponent(labelPrazo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(frameFormLayout.createSequentialGroup()
                                 .addGap(13, 13, 13)
                                 .addGroup(frameFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelNotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(scrollNotas, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))))))
+                                    .addComponent(scrollNotas, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frameFormLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(inputPrazo)))))
                 .addContainerGap())
         );
         frameFormLayout.setVerticalGroup(
@@ -150,9 +152,9 @@ public class NewTaskScreen extends javax.swing.JDialog {
                     .addComponent(labelNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelPrazo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(frameFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inputPrazo, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(inputNome, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
+                .addGroup(frameFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputNome, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputPrazo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(frameFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -199,13 +201,13 @@ public class NewTaskScreen extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void inputPrazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputPrazoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inputPrazoActionPerformed
-
     private void inputNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputNomeActionPerformed
+
+    private void inputPrazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputPrazoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputPrazoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,7 +259,7 @@ public class NewTaskScreen extends javax.swing.JDialog {
     private javax.swing.JTextArea inputDescricao;
     private javax.swing.JTextArea inputDescricao1;
     private javax.swing.JTextField inputNome;
-    private javax.swing.JTextField inputPrazo;
+    private javax.swing.JFormattedTextField inputPrazo;
     private javax.swing.JLabel labelDescricao;
     private javax.swing.JLabel labelHeader;
     private javax.swing.JLabel labelNome;
