@@ -31,7 +31,7 @@ public class MainScreen extends javax.swing.JFrame {
         frameHeaderProjetos = new javax.swing.JPanel();
         labelProjetos = new javax.swing.JLabel();
         btnNovoProjeto = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollProjetos = new javax.swing.JScrollPane();
         listaProjetos = new javax.swing.JList<>();
         frameTarefas = new javax.swing.JPanel();
         frameHeaderTarefas = new javax.swing.JPanel();
@@ -132,7 +132,7 @@ public class MainScreen extends javax.swing.JFrame {
         listaProjetos.setFixedCellHeight(30);
         listaProjetos.setSelectionBackground(new java.awt.Color(108, 92, 231));
         listaProjetos.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(listaProjetos);
+        scrollProjetos.setViewportView(listaProjetos);
 
         javax.swing.GroupLayout frameProjetosLayout = new javax.swing.GroupLayout(frameProjetos);
         frameProjetos.setLayout(frameProjetosLayout);
@@ -141,7 +141,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addComponent(frameHeaderProjetos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frameProjetosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(scrollProjetos)
                 .addContainerGap())
         );
         frameProjetosLayout.setVerticalGroup(
@@ -149,7 +149,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(frameProjetosLayout.createSequentialGroup()
                 .addComponent(frameHeaderProjetos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                .addComponent(scrollProjetos, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -369,12 +369,12 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel frameProjetos;
     private javax.swing.JPanel frameTarefas;
     private javax.swing.JLabel iconeSemTarefas;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCliqueMais;
     private javax.swing.JLabel labelNenhumaTarefa;
     private javax.swing.JLabel labelProjetos;
     private javax.swing.JLabel labelTarefas;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JList<String> listaProjetos;
+    private javax.swing.JScrollPane scrollProjetos;
     // End of variables declaration//GEN-END:variables
 }
