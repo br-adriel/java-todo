@@ -4,11 +4,18 @@
  */
 package view;
 
+import controller.ProjectController;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import model.Project;
+
 /**
  *
  * @author adriel
  */
 public class NewProjectScreen extends javax.swing.JDialog {
+
+    ProjectController controller;
 
     /**
      * Creates new form NewProjectScreen
@@ -16,6 +23,8 @@ public class NewProjectScreen extends javax.swing.JDialog {
     public NewProjectScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        controller = new ProjectController();
     }
 
     /**
@@ -91,30 +100,30 @@ public class NewProjectScreen extends javax.swing.JDialog {
         btnSalvar.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         btnSalvar.setForeground(new java.awt.Color(255, 255, 255));
         btnSalvar.setText("Salvar");
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout frameFormLayout = new javax.swing.GroupLayout(frameForm);
         frameForm.setLayout(frameFormLayout);
         frameFormLayout.setHorizontalGroup(
             frameFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(frameFormLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(frameFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frameFormLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrollDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                    .addComponent(inputNome, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(frameFormLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(frameFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frameFormLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(scrollDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                            .addComponent(inputNome, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(frameFormLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(labelNome)
+                            .addComponent(labelNome)
+                            .addComponent(labelDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(frameFormLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         frameFormLayout.setVerticalGroup(
             frameFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,6 +178,31 @@ public class NewProjectScreen extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_inputNomeActionPerformed
 
+    private void btnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseClicked
+        String nome = inputNome.getText();
+        String descricao = inputDescricao.getText();
+
+        if (nome.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "O campo 'nome' está vazio");
+        } else {
+            try {
+                Project project = new Project();
+
+                project.setName(nome);
+                project.setDescription(descricao);
+                project.setCreatedAt(new Date());
+                project.setUpdatedAt(new Date());
+
+                controller.save(project);
+                JOptionPane.showMessageDialog(rootPane, "Projeto salvo");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Um erro ocorreu");
+            }
+            this.dispose();
+        }
+
+    }//GEN-LAST:event_btnSalvarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -180,7 +214,7 @@ public class NewProjectScreen extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Java swing".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

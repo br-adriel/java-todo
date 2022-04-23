@@ -124,6 +124,9 @@ public class MainScreen extends javax.swing.JFrame {
         btnNovoProjeto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNovoProjeto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnNovoProjeto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNovoProjetoMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnNovoProjetoMouseExited(evt);
             }
@@ -362,6 +365,11 @@ public class MainScreen extends javax.swing.JFrame {
     private void btnNovaTarefaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaTarefaMouseExited
         btnNovaTarefa.setBackground(new Color(108, 92, 231));
     }//GEN-LAST:event_btnNovaTarefaMouseExited
+
+    private void btnNovoProjetoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoProjetoMouseClicked
+        NewProjectScreen newProjectScreen = new NewProjectScreen(this, rootPaneCheckingEnabled);
+        newProjectScreen.setVisible(true);
+    }//GEN-LAST:event_btnNovoProjetoMouseClicked
 
     /**
      * @param args the command line arguments
