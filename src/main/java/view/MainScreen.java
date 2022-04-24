@@ -1,7 +1,14 @@
 package view;
 
+import controller.ProjectController;
+import controller.TaskController;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import model.Project;
 
 /**
  *
@@ -9,12 +16,16 @@ import java.awt.Font;
  */
 public class MainScreen extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainScreen
-     */
+    ProjectController projectController;
+    TaskController taskController;
+    
+    DefaultListModel projectModel;
+    
     public MainScreen() {
         initComponents();
         decorateTableTask();
+        initDataController();
+        initComponentsModel();
     }
 
     /**
@@ -146,7 +157,7 @@ public class MainScreen extends javax.swing.JFrame {
             frameHeaderProjetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(frameHeaderProjetosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelProjetos, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                .addComponent(labelProjetos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNovoProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -161,13 +172,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        listaProjetos.setBorder(null);
         listaProjetos.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
-        listaProjetos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         listaProjetos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         listaProjetos.setFixedCellHeight(30);
         listaProjetos.setSelectionBackground(new java.awt.Color(108, 92, 231));
@@ -292,7 +297,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addComponent(frameHeaderTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(frameTarefasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollTarefas)
+                .addComponent(scrollTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addContainerGap())
         );
         frameTarefasLayout.setVerticalGroup(
@@ -371,6 +376,14 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void btnNovoProjetoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoProjetoMouseClicked
         NewProjectScreen newProjectScreen = new NewProjectScreen(this, rootPaneCheckingEnabled);
+        
+        // recarrega lista de projetos apos adicao
+        newProjectScreen.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                loadProjects();
+            }
+        });
+        
         newProjectScreen.setVisible(true);
     }//GEN-LAST:event_btnNovoProjetoMouseClicked
 
@@ -442,5 +455,28 @@ public class MainScreen extends javax.swing.JFrame {
         tabelaTarefas.getTableHeader().setBackground(new Color(108,92,231));
         tabelaTarefas.getTableHeader().setForeground(new Color(255, 255, 255));
         tabelaTarefas.setAutoCreateRowSorter(true);
+    }
+    
+    public void initDataController() {
+        projectController = new ProjectController();
+        taskController = new TaskController();
+    }
+    
+    public void initComponentsModel() {
+        projectModel = new DefaultListModel();
+        loadProjects();
+    }
+    
+    public void loadProjects() {
+        List<Project> projects = projectController.getAll();
+        
+        projectModel.clear();
+        
+        for (int i=0; i<projects.size(); i++) {
+            Project project = projects.get(i);
+            projectModel.addElement(project);
+        }
+        
+        listaProjetos.setModel(projectModel);
     }
 }
