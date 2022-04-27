@@ -243,7 +243,7 @@ public class NewTaskScreen extends javax.swing.JDialog {
             try {
                 Task task = new Task();
                 
-                task.setIdProject(8);
+                task.setIdProject(project.getId());
                 task.setName(nome);
                 task.setDescription(descricao);
                 task.setNotes(notas);

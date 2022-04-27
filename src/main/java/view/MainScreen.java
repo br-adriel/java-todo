@@ -9,6 +9,8 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
+import model.Task;
+import util.TaskTableModel;
 
 /**
  *
@@ -18,9 +20,10 @@ public class MainScreen extends javax.swing.JFrame {
 
     ProjectController projectController;
     TaskController taskController;
-    
-    DefaultListModel projectModel;
-    
+
+    DefaultListModel projectsModel;
+    TaskTableModel tasksModel;
+
     public MainScreen() {
         initComponents();
         decorateTableTask();
@@ -37,10 +40,8 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        frameNenhumaTarefa = new javax.swing.JPanel();
-        iconeSemTarefas = new javax.swing.JLabel();
-        labelNenhumaTarefa = new javax.swing.JLabel();
-        labelCliqueMais = new javax.swing.JLabel();
+        scrollTarefas = new javax.swing.JScrollPane();
+        tabelaTarefas = new javax.swing.JTable();
         frameFundo = new javax.swing.JPanel();
         frameHeader = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
@@ -54,41 +55,52 @@ public class MainScreen extends javax.swing.JFrame {
         frameHeaderTarefas = new javax.swing.JPanel();
         labelTarefas = new javax.swing.JLabel();
         btnNovaTarefa = new javax.swing.JButton();
-        scrollTarefas = new javax.swing.JScrollPane();
-        tabelaTarefas = new javax.swing.JTable();
+        frameNenhumaTarefa = new javax.swing.JPanel();
+        iconeSemTarefas = new javax.swing.JLabel();
+        labelNenhumaTarefa = new javax.swing.JLabel();
+        labelCliqueMais = new javax.swing.JLabel();
 
-        frameNenhumaTarefa.setBackground(new java.awt.Color(255, 255, 255));
+        scrollTarefas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
 
-        iconeSemTarefas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        iconeSemTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check-square.png"))); // NOI18N
+        tabelaTarefas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        tabelaTarefas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Descricao", "Prazo", "Concluida"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true
+            };
 
-        labelNenhumaTarefa.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
-        labelNenhumaTarefa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelNenhumaTarefa.setText("Nenhuma tarefa por aqui...");
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        labelCliqueMais.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        labelCliqueMais.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelCliqueMais.setText("Clique em + para adicionar uma tarefa");
-
-        javax.swing.GroupLayout frameNenhumaTarefaLayout = new javax.swing.GroupLayout(frameNenhumaTarefa);
-        frameNenhumaTarefa.setLayout(frameNenhumaTarefaLayout);
-        frameNenhumaTarefaLayout.setHorizontalGroup(
-            frameNenhumaTarefaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(iconeSemTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(labelNenhumaTarefa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-            .addComponent(labelCliqueMais, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        frameNenhumaTarefaLayout.setVerticalGroup(
-            frameNenhumaTarefaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(frameNenhumaTarefaLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(iconeSemTarefas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNenhumaTarefa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelCliqueMais)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaTarefas.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaTarefas.setInheritsPopupMenu(true);
+        tabelaTarefas.setRowHeight(40);
+        tabelaTarefas.setSelectionBackground(new java.awt.Color(108, 92, 231));
+        tabelaTarefas.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tabelaTarefas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaTarefas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaTarefasMouseClicked(evt);
+            }
+        });
+        scrollTarefas.setViewportView(tabelaTarefas);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TO DO");
@@ -177,6 +189,11 @@ public class MainScreen extends javax.swing.JFrame {
         listaProjetos.setFixedCellHeight(30);
         listaProjetos.setSelectionBackground(new java.awt.Color(108, 92, 231));
         listaProjetos.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        listaProjetos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaProjetosMouseClicked(evt);
+            }
+        });
         scrollProjetos.setViewportView(listaProjetos);
 
         javax.swing.GroupLayout frameProjetosLayout = new javax.swing.GroupLayout(frameProjetos);
@@ -239,7 +256,7 @@ public class MainScreen extends javax.swing.JFrame {
             frameHeaderTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(frameHeaderTarefasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNovaTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -254,59 +271,60 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        scrollTarefas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        frameNenhumaTarefa.setBackground(new java.awt.Color(255, 255, 255));
 
-        tabelaTarefas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        tabelaTarefas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nome", "Descricao", "Prazo", "Concluida"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true
-            };
+        iconeSemTarefas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconeSemTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check-square.png"))); // NOI18N
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+        labelNenhumaTarefa.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        labelNenhumaTarefa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelNenhumaTarefa.setText("Nenhuma tarefa por aqui...");
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabelaTarefas.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaTarefas.setInheritsPopupMenu(true);
-        tabelaTarefas.setRowHeight(40);
-        tabelaTarefas.setSelectionBackground(new java.awt.Color(108, 92, 231));
-        tabelaTarefas.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        scrollTarefas.setViewportView(tabelaTarefas);
+        labelCliqueMais.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        labelCliqueMais.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelCliqueMais.setText("Clique em + para adicionar uma tarefa");
+
+        javax.swing.GroupLayout frameNenhumaTarefaLayout = new javax.swing.GroupLayout(frameNenhumaTarefa);
+        frameNenhumaTarefa.setLayout(frameNenhumaTarefaLayout);
+        frameNenhumaTarefaLayout.setHorizontalGroup(
+            frameNenhumaTarefaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(iconeSemTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelNenhumaTarefa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+            .addComponent(labelCliqueMais, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        frameNenhumaTarefaLayout.setVerticalGroup(
+            frameNenhumaTarefaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frameNenhumaTarefaLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(iconeSemTarefas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelNenhumaTarefa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCliqueMais)
+                .addContainerGap(264, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout frameTarefasLayout = new javax.swing.GroupLayout(frameTarefas);
         frameTarefas.setLayout(frameTarefasLayout);
         frameTarefasLayout.setHorizontalGroup(
             frameTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(frameHeaderTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(frameTarefasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(frameTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(frameTarefasLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(frameNenhumaTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         frameTarefasLayout.setVerticalGroup(
             frameTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(frameTarefasLayout.createSequentialGroup()
                 .addComponent(frameHeaderTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollTarefas)
-                .addContainerGap())
+                .addContainerGap(439, Short.MAX_VALUE))
+            .addGroup(frameTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frameTarefasLayout.createSequentialGroup()
+                    .addContainerGap(52, Short.MAX_VALUE)
+                    .addComponent(frameNenhumaTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
 
         javax.swing.GroupLayout frameFundoLayout = new javax.swing.GroupLayout(frameFundo);
@@ -376,22 +394,79 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void btnNovoProjetoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoProjetoMouseClicked
         NewProjectScreen newProjectScreen = new NewProjectScreen(this, rootPaneCheckingEnabled);
-        
+
         // recarrega lista de projetos apos adicao
         newProjectScreen.addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
                 loadProjects();
             }
         });
-        
+
         newProjectScreen.setVisible(true);
     }//GEN-LAST:event_btnNovoProjetoMouseClicked
 
     private void btnNovaTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaTarefaMouseClicked
         NewTaskScreen newTaskScreen = new NewTaskScreen(this, rootPaneCheckingEnabled);
-        //newTaskScreen.setProject(null);
+        
+        int projectIndex = listaProjetos.getSelectedIndex();
+        Project project = (Project) projectsModel.get(projectIndex);
+        newTaskScreen.setProject(project);
+        
         newTaskScreen.setVisible(true);
+        newTaskScreen.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                int projectIndex = listaProjetos.getSelectedIndex();
+                Project project = (Project) projectsModel.get(projectIndex);
+                loadTasks(project.getId());
+            }
+        });
     }//GEN-LAST:event_btnNovaTarefaMouseClicked
+
+    private void listaProjetosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProjetosMouseClicked
+        int projectIndex = listaProjetos.getSelectedIndex();
+        Project project = (Project) projectsModel.get(projectIndex);
+        loadTasks(project.getId());
+    }//GEN-LAST:event_listaProjetosMouseClicked
+
+    private void tabelaTarefasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaTarefasMouseClicked
+        int rowIndex = tabelaTarefas.rowAtPoint(evt.getPoint());
+        int columnIndex = tabelaTarefas.columnAtPoint(evt.getPoint());
+
+        switch (columnIndex) {
+            case 3:
+            Task task = tasksModel.getTasks().get(rowIndex);
+            taskController.update(task);
+            break;
+        }
+    }//GEN-LAST:event_tabelaTarefasMouseClicked
+
+    private void showTabelaTarefas(boolean hasTasks) {
+        if (hasTasks) { // Verifica se tarefas foram carregadas
+            // remove msg de projeto sem tarefas
+            if (frameNenhumaTarefa.isVisible()) {
+                frameNenhumaTarefa.setVisible(false);
+                frameTarefas.remove(frameNenhumaTarefa);
+            }
+
+            // adiciona lista de tarefas
+            frameTarefas.add(scrollTarefas);
+            scrollTarefas.setVisible(true);
+            scrollTarefas.setLocation(0, frameHeaderTarefas.getHeight());
+            scrollTarefas.setSize(frameTarefas.getWidth(), frameTarefas.getHeight() - frameHeaderTarefas.getHeight());
+        } else {
+            // remove lista de tarefas
+            if (scrollTarefas.isVisible()) {
+                scrollTarefas.setVisible(false);
+                frameTarefas.remove(scrollTarefas);
+            }
+
+            // adiciona msg de projeto sem tarefas
+            frameTarefas.add(frameNenhumaTarefa);
+            frameNenhumaTarefa.setVisible(true);
+            frameNenhumaTarefa.setLocation(0, frameHeaderTarefas.getHeight());
+            frameNenhumaTarefa.setSize(frameTarefas.getWidth(), frameTarefas.getHeight() - frameHeaderTarefas.getHeight());
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -452,31 +527,48 @@ public class MainScreen extends javax.swing.JFrame {
 
     public void decorateTableTask() {
         tabelaTarefas.getTableHeader().setFont(new Font("Ubuntu", Font.BOLD, 14));
-        tabelaTarefas.getTableHeader().setBackground(new Color(108,92,231));
+        tabelaTarefas.getTableHeader().setBackground(new Color(108, 92, 231));
         tabelaTarefas.getTableHeader().setForeground(new Color(255, 255, 255));
         tabelaTarefas.setAutoCreateRowSorter(true);
     }
-    
+
     public void initDataController() {
         projectController = new ProjectController();
         taskController = new TaskController();
     }
-    
+
     public void initComponentsModel() {
-        projectModel = new DefaultListModel();
+        projectsModel = new DefaultListModel();
         loadProjects();
+        
+        tasksModel = new TaskTableModel();
+        tabelaTarefas.setModel(tasksModel);
+        
+        if(!projectsModel.isEmpty()) {
+            listaProjetos.setSelectedIndex(0);
+            Project project = (Project) projectsModel.get(0);
+            loadTasks(project.getId());
+        }
+
     }
-    
+
+    public void loadTasks(int idProjeto) {
+        List<Task> tasks = taskController.getAll(idProjeto);
+        tasksModel.setTasks(tasks);
+        
+        showTabelaTarefas(!tasks.isEmpty());
+    }
+
     public void loadProjects() {
         List<Project> projects = projectController.getAll();
-        
-        projectModel.clear();
-        
-        for (int i=0; i<projects.size(); i++) {
+
+        projectsModel.clear();
+
+        for (int i = 0; i < projects.size(); i++) {
             Project project = projects.get(i);
-            projectModel.addElement(project);
+            projectsModel.addElement(project);
         }
-        
-        listaProjetos.setModel(projectModel);
+
+        listaProjetos.setModel(projectsModel);
     }
 }
