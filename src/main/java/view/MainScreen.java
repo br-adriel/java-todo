@@ -11,6 +11,7 @@ import javax.swing.DefaultListModel;
 import model.Project;
 import model.Task;
 import util.DeadlineColumnCellRenderer;
+import util.TaskColumnCellRenderer;
 import util.TaskTableModel;
 
 /**
@@ -541,6 +542,8 @@ public class MainScreen extends javax.swing.JFrame {
         tabelaTarefas.getTableHeader().setForeground(new Color(255, 255, 255));
         tabelaTarefas.setAutoCreateRowSorter(true);
         
+        tabelaTarefas.getColumnModel().getColumn(0).setCellRenderer(new TaskColumnCellRenderer());
+        tabelaTarefas.getColumnModel().getColumn(1).setCellRenderer(new TaskColumnCellRenderer());
         tabelaTarefas.getColumnModel().getColumn(2).setCellRenderer(new DeadlineColumnCellRenderer());
     }
     
