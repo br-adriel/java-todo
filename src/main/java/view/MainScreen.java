@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
 import model.Task;
+import util.ButtonColumnCellRenderer;
 import util.DeadlineColumnCellRenderer;
 import util.TaskColumnCellRenderer;
 import util.TaskTableModel;
@@ -545,6 +546,8 @@ public class MainScreen extends javax.swing.JFrame {
         tabelaTarefas.getColumnModel().getColumn(0).setCellRenderer(new TaskColumnCellRenderer());
         tabelaTarefas.getColumnModel().getColumn(1).setCellRenderer(new TaskColumnCellRenderer());
         tabelaTarefas.getColumnModel().getColumn(2).setCellRenderer(new DeadlineColumnCellRenderer());
+        tabelaTarefas.getColumnModel().getColumn(4).setCellRenderer(new ButtonColumnCellRenderer("edit"));
+        tabelaTarefas.getColumnModel().getColumn(5).setCellRenderer(new ButtonColumnCellRenderer("delete"));
     }
     
     public void initDataController() {
