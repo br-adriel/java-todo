@@ -409,11 +409,11 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void btnNovaTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaTarefaMouseClicked
         NewTaskScreen newTaskScreen = new NewTaskScreen(this, rootPaneCheckingEnabled);
-        
+
         int projectIndex = listaProjetos.getSelectedIndex();
         Project project = (Project) projectsModel.get(projectIndex);
         newTaskScreen.setProject(project);
-        
+
         newTaskScreen.setVisible(true);
         newTaskScreen.addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
@@ -434,11 +434,19 @@ public class MainScreen extends javax.swing.JFrame {
         int rowIndex = tabelaTarefas.rowAtPoint(evt.getPoint());
         int columnIndex = tabelaTarefas.columnAtPoint(evt.getPoint());
 
+        Task task = tasksModel.getTasks().get(rowIndex);
         switch (columnIndex) {
             case 3:
-            Task task = tasksModel.getTasks().get(rowIndex);
-            taskController.update(task);
-            break;
+                taskController.update(task);
+                break;
+            case 5:
+                taskController.removeById(task.getId());
+                tasksModel.getTasks().remove(task);
+                
+                int projectIndex = listaProjetos.getSelectedIndex();
+                Project project = (Project) projectsModel.get(projectIndex);
+                loadTasks(project.getId());
+                break;
         }
     }//GEN-LAST:event_tabelaTarefasMouseClicked
 
@@ -541,11 +549,11 @@ public class MainScreen extends javax.swing.JFrame {
     public void initComponentsModel() {
         projectsModel = new DefaultListModel();
         loadProjects();
-        
+
         tasksModel = new TaskTableModel();
         tabelaTarefas.setModel(tasksModel);
-        
-        if(!projectsModel.isEmpty()) {
+
+        if (!projectsModel.isEmpty()) {
             listaProjetos.setSelectedIndex(0);
             Project project = (Project) projectsModel.get(0);
             loadTasks(project.getId());
@@ -556,7 +564,7 @@ public class MainScreen extends javax.swing.JFrame {
     public void loadTasks(int idProjeto) {
         List<Task> tasks = taskController.getAll(idProjeto);
         tasksModel.setTasks(tasks);
-        
+
         showTabelaTarefas(!tasks.isEmpty());
     }
 
