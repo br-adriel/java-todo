@@ -55,6 +55,7 @@ public class MainScreen extends javax.swing.JFrame {
         frameHeaderTarefas = new javax.swing.JPanel();
         labelTarefas = new javax.swing.JLabel();
         btnNovaTarefa = new javax.swing.JButton();
+        frameListarTarefas = new javax.swing.JPanel();
         frameNenhumaTarefa = new javax.swing.JPanel();
         iconeSemTarefas = new javax.swing.JLabel();
         labelNenhumaTarefa = new javax.swing.JLabel();
@@ -256,7 +257,7 @@ public class MainScreen extends javax.swing.JFrame {
             frameHeaderTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(frameHeaderTarefasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                .addComponent(labelTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNovaTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -270,6 +271,9 @@ public class MainScreen extends javax.swing.JFrame {
                     .addComponent(labelTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        frameListarTarefas.setBackground(new java.awt.Color(255, 255, 255));
+        frameListarTarefas.setLayout(new java.awt.BorderLayout());
 
         frameNenhumaTarefa.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -289,7 +293,7 @@ public class MainScreen extends javax.swing.JFrame {
         frameNenhumaTarefaLayout.setHorizontalGroup(
             frameNenhumaTarefaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(iconeSemTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(labelNenhumaTarefa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+            .addComponent(labelNenhumaTarefa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
             .addComponent(labelCliqueMais, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         frameNenhumaTarefaLayout.setVerticalGroup(
@@ -301,30 +305,28 @@ public class MainScreen extends javax.swing.JFrame {
                 .addComponent(labelNenhumaTarefa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelCliqueMais)
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addContainerGap(297, Short.MAX_VALUE))
         );
+
+        frameListarTarefas.add(frameNenhumaTarefa, java.awt.BorderLayout.PAGE_START);
 
         javax.swing.GroupLayout frameTarefasLayout = new javax.swing.GroupLayout(frameTarefas);
         frameTarefas.setLayout(frameTarefasLayout);
         frameTarefasLayout.setHorizontalGroup(
             frameTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(frameHeaderTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(frameTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(frameTarefasLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(frameNenhumaTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(frameTarefasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(frameListarTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         frameTarefasLayout.setVerticalGroup(
             frameTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(frameTarefasLayout.createSequentialGroup()
                 .addComponent(frameHeaderTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(439, Short.MAX_VALUE))
-            .addGroup(frameTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frameTarefasLayout.createSequentialGroup()
-                    .addContainerGap(52, Short.MAX_VALUE)
-                    .addComponent(frameNenhumaTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(frameListarTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout frameFundoLayout = new javax.swing.GroupLayout(frameFundo);
@@ -445,26 +447,24 @@ public class MainScreen extends javax.swing.JFrame {
             // remove msg de projeto sem tarefas
             if (frameNenhumaTarefa.isVisible()) {
                 frameNenhumaTarefa.setVisible(false);
-                frameTarefas.remove(frameNenhumaTarefa);
+                frameListarTarefas.remove(frameNenhumaTarefa);
             }
 
             // adiciona lista de tarefas
-            frameTarefas.add(scrollTarefas);
+            frameListarTarefas.add(scrollTarefas);
             scrollTarefas.setVisible(true);
-            scrollTarefas.setLocation(0, frameHeaderTarefas.getHeight());
-            scrollTarefas.setSize(frameTarefas.getWidth(), frameTarefas.getHeight() - frameHeaderTarefas.getHeight());
+            scrollTarefas.setSize(frameListarTarefas.getWidth(), frameListarTarefas.getHeight());
         } else {
             // remove lista de tarefas
             if (scrollTarefas.isVisible()) {
                 scrollTarefas.setVisible(false);
-                frameTarefas.remove(scrollTarefas);
+                frameListarTarefas.remove(scrollTarefas);
             }
 
             // adiciona msg de projeto sem tarefas
-            frameTarefas.add(frameNenhumaTarefa);
+            frameListarTarefas.add(frameNenhumaTarefa);
             frameNenhumaTarefa.setVisible(true);
-            frameNenhumaTarefa.setLocation(0, frameHeaderTarefas.getHeight());
-            frameNenhumaTarefa.setSize(frameTarefas.getWidth(), frameTarefas.getHeight() - frameHeaderTarefas.getHeight());
+            frameNenhumaTarefa.setSize(frameListarTarefas.getWidth(), frameListarTarefas.getHeight());
         }
     }
 
@@ -510,6 +510,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel frameHeader;
     private javax.swing.JPanel frameHeaderProjetos;
     private javax.swing.JPanel frameHeaderTarefas;
+    private javax.swing.JPanel frameListarTarefas;
     private javax.swing.JPanel frameNenhumaTarefa;
     private javax.swing.JPanel frameProjetos;
     private javax.swing.JPanel frameTarefas;
