@@ -14,6 +14,10 @@ public class ButtonColumnCellRenderer extends DefaultTableCellRenderer {
 
     private String buttonType;
 
+    public ButtonColumnCellRenderer(String buttonType) {
+        this.buttonType = buttonType;
+    }
+
     public String getButtonType() {
         return buttonType;
     }
