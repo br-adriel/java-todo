@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
 import model.Task;
+import util.DeadlineColumnCellRenderer;
 import util.TaskTableModel;
 
 /**
@@ -17,18 +18,18 @@ import util.TaskTableModel;
  * @author adriel
  */
 public class MainScreen extends javax.swing.JFrame {
-
+    
     ProjectController projectController;
     TaskController taskController;
-
+    
     DefaultListModel projectsModel;
     TaskTableModel tasksModel;
-
+    
     public MainScreen() {
         initComponents();
-        decorateTableTask();
         initDataController();
         initComponentsModel();
+        decorateTableTask();
     }
 
     /**
@@ -403,17 +404,17 @@ public class MainScreen extends javax.swing.JFrame {
                 loadProjects();
             }
         });
-
+        
         newProjectScreen.setVisible(true);
     }//GEN-LAST:event_btnNovoProjetoMouseClicked
 
     private void btnNovaTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaTarefaMouseClicked
         NewTaskScreen newTaskScreen = new NewTaskScreen(this, rootPaneCheckingEnabled);
-
+        
         int projectIndex = listaProjetos.getSelectedIndex();
         Project project = (Project) projectsModel.get(projectIndex);
         newTaskScreen.setProject(project);
-
+        
         newTaskScreen.setVisible(true);
         newTaskScreen.addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
@@ -433,7 +434,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void tabelaTarefasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaTarefasMouseClicked
         int rowIndex = tabelaTarefas.rowAtPoint(evt.getPoint());
         int columnIndex = tabelaTarefas.columnAtPoint(evt.getPoint());
-
+        
         Task task = tasksModel.getTasks().get(rowIndex);
         switch (columnIndex) {
             case 3:
@@ -449,7 +450,7 @@ public class MainScreen extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_tabelaTarefasMouseClicked
-
+    
     private void showTabelaTarefas(boolean hasTasks) {
         if (hasTasks) { // Verifica se tarefas foram carregadas
             // remove msg de projeto sem tarefas
@@ -539,45 +540,47 @@ public class MainScreen extends javax.swing.JFrame {
         tabelaTarefas.getTableHeader().setBackground(new Color(108, 92, 231));
         tabelaTarefas.getTableHeader().setForeground(new Color(255, 255, 255));
         tabelaTarefas.setAutoCreateRowSorter(true);
+        
+        tabelaTarefas.getColumnModel().getColumn(2).setCellRenderer(new DeadlineColumnCellRenderer());
     }
-
+    
     public void initDataController() {
         projectController = new ProjectController();
         taskController = new TaskController();
     }
-
+    
     public void initComponentsModel() {
         projectsModel = new DefaultListModel();
         loadProjects();
-
+        
         tasksModel = new TaskTableModel();
         tabelaTarefas.setModel(tasksModel);
-
+        
         if (!projectsModel.isEmpty()) {
             listaProjetos.setSelectedIndex(0);
             Project project = (Project) projectsModel.get(0);
             loadTasks(project.getId());
         }
-
+        
     }
-
+    
     public void loadTasks(int idProjeto) {
         List<Task> tasks = taskController.getAll(idProjeto);
         tasksModel.setTasks(tasks);
-
+        
         showTabelaTarefas(!tasks.isEmpty());
     }
-
+    
     public void loadProjects() {
         List<Project> projects = projectController.getAll();
-
+        
         projectsModel.clear();
-
+        
         for (int i = 0; i < projects.size(); i++) {
             Project project = projects.get(i);
             projectsModel.addElement(project);
         }
-
+        
         listaProjetos.setModel(projectsModel);
     }
 }
