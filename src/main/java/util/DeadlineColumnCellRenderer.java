@@ -25,9 +25,9 @@ public class DeadlineColumnCellRenderer extends DefaultTableCellRenderer {
         TaskTableModel taskModel = (TaskTableModel) table.getModel();
         Task task = taskModel.getTasks().get(row);
         if (task.isIsCompleted()) {
-            label.setForeground(new Color(0, 255, 0));
+            label.setForeground(new Color(0, 184, 148));
         } else if (task.getDeadline().before(new Date())) {
-            label.setForeground(new Color(255, 0, 0));
+            label.setForeground(new Color(214, 48, 49));
         } else {
             label.setForeground(new Color(0, 0, 0));
         }
